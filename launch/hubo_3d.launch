@@ -16,14 +16,14 @@
 
 <launch>
   <param name="robot_description"
-    textfile="$(find cartographer_ros)/urdf/hubo_3d.urdf" />
+    textfile="$(find hubo_slam)/urdf/hubo_3d.urdf" />
 
   <node name="robot_state_publisher" pkg="robot_state_publisher"
     type="robot_state_publisher" />
 
   <node name="cartographer_node" pkg="cartographer_ros"
       type="cartographer_node" args="
-          -configuration_directory $(find cartographer_ros)/configuration_files
+          -configuration_directory $(find hubo_slam)/configuration_files
           -configuration_basename hubo_3d.lua"
       output="screen">
     <remap from="points2" to="/velodyne_points" />

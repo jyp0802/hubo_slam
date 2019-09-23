@@ -17,32 +17,19 @@
 <launch>
   <param name="/use_sim_time" value="true" />
 
-  <param name="robot_description"
-    textfile="$(find hubo_slam)/urdf/hubo_3d.urdf" />
+  <node name="rviz" pkg="rviz" type="rviz" required="true"
+      args="-d $(find hubo_slam)/configuration_files/hubo_2d.rviz" />
 
-<!--
-  <include file="$(find microstrain_3dm_gx5_45)/launch/microstrain_25.launch" />
-  <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch" />
--->
-
-  <node name="robot_state_publisher" pkg="robot_state_publisher"
-    type="robot_state_publisher" />
-
-  <node name="cartographer_node" pkg="cartographer_ros"
-      type="cartographer_node" args="
+  <node name="cartographer_offline_node" pkg="cartographer_ros"
+      type="cartographer_offline_node" args="
           -configuration_directory $(find hubo_slam)/configuration_files
-          -configuration_basename hubo_3d_localization.lua
-          -load_state_filename $(arg load_state_filename)"
+          -configuration_basenames hubo_2d.lua
+          -urdf_filenames $(find hubo_slam)/urdf/hubo_3d.urdf
+          -bag_filenames $(arg bag_filenames)"
       output="screen">
     <remap from="points2" to="/velodyne_points" />
   </node>
 
   <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros"
       type="cartographer_occupancy_grid_node" args="-resolution 0.05" />
-
-  <node name="rviz" pkg="rviz" type="rviz" required="true"
-      args="-d $(find hubo_slam)/configuration_files/hubo_3d.rviz" />
-
-  <node name="playbag" pkg="rosbag" type="play"
-      args="--clock $(arg bag_filename)" />
 </launch>

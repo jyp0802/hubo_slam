@@ -19,12 +19,12 @@
     <color rgba="1.0 0.5 0.2 1" />
   </material>
   <material name="gray">
-    <color rgba="0.2 0.2 0.2 1" />
+    <color rgba="0.3 0.3 0.3 1" />
   </material>
 
   <link name="imu_link">
     <visual>
-      <origin xyz="0.0 0.0 0.92" />
+      <origin xyz="0.0 0.0 0.0" />
       <geometry>
         <box size="0.06 0.04 0.02" />
       </geometry>
@@ -53,6 +53,6 @@
   <joint name="velodyne_joint" type="fixed">
     <parent link="base_link" />
     <child link="velodyne" />
-    <origin xyz="0. 0. 0.99" rpy="0. 0. 0." />
+    <origin xyz="0 0 0.5" rpy="0 0 0" />
   </joint>
 </robot>

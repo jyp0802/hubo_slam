@@ -19,8 +19,8 @@
 
   <include file="$(find microstrain_3dm_gx5_45)/launch/microstrain_25.launch" />
   <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch" />
-  <include file="$(find hubo_slam)/launch/hubo_3d.launch" />
+  <include file="$(find hubo_slam)/launch/kobuki_2d.launch" />
 
   <node name="rviz" pkg="rviz" type="rviz" required="true"
-      args="-d $(find hubo_slam)/configuration_files/hubo_3d.rviz" />
+      args="-d $(find hubo_slam)/configuration_files/hubo_2d.rviz" />
 </launch>

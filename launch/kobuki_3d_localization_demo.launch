@@ -19,12 +19,9 @@
 
   <param name="robot_description"
     textfile="$(find hubo_slam)/urdf/kobuki_3d.urdf" />
-<!--
+
   <include file="$(find microstrain_3dm_gx5_45)/launch/microstrain_25.launch" />
   <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch" />
--->
-  <node name="playbag" pkg="rosbag" type="play"
-      args="--clock $(arg bag_filename)" />
 
   <node name="robot_state_publisher" pkg="robot_state_publisher"
     type="robot_state_publisher" />

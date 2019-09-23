@@ -16,11 +16,20 @@
 
 <launch>
   <param name="/use_sim_time" value="false" />
+  <arg name="save_bag" default="temp" />
+  <arg name="save_pbstream" default="kobuki_2d" />
 
   <include file="$(find microstrain_3dm_gx5_45)/launch/microstrain_25.launch" />
   <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch" />
-  <include file="$(find hubo_slam)/launch/kobuki_2d.launch" />
+  <include file="$(find hubo_slam)/launch/kobuki_2d.launch">
+    <arg name="save_pbstream" value ="$(find hubo_slam)/data/$(arg save_pbstream).pbstream" />
+  </include>
 
   <node name="rviz" pkg="rviz" type="rviz" required="true"
       args="-d $(find hubo_slam)/configuration_files/hubo_2d.rviz" />
+
+  <node name="record_rosbag" pkg="rosbag" type="record"
+       args="record -O $(find hubo_slam)/data/$(arg save_bag).bag -e '/velodyne_(.*)' '/imu(.*)' /diagnostics /scan"
+       if="$(eval save_bag != 'temp')" />
+
 </launch>

@@ -21,10 +21,12 @@
   <node name="robot_state_publisher" pkg="robot_state_publisher"
     type="robot_state_publisher" />
 
+  <arg name="save_pbstream" />
+
   <node name="cartographer_node" pkg="cartographer_ros"
       type="cartographer_node" args="
           -configuration_directory $(find hubo_slam)/configuration_files
-          -save_state_filename /home/jyp0802/Hubo/hubo_slam_ws/data/testing.pbstream
+          -save_state_filename $(arg save_pbstream)
           -configuration_basename kobuki_3d.lua"
       output="screen">
     <remap from="points2" to="/velodyne_points" />

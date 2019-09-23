@@ -21,10 +21,13 @@
   <node name="robot_state_publisher" pkg="robot_state_publisher"
     type="robot_state_publisher" />
 
+  <arg name="save_pbstream" />
+
   <node name="cartographer_node" pkg="cartographer_ros"
       type="cartographer_node" args="
           -configuration_directory $(find hubo_slam)/configuration_files
           -configuration_basename hubo_3d.lua"
+          -save_state_filename $(arg save_pbstream)
       output="screen">
     <remap from="points2" to="/velodyne_points" />
   </node>
@@ -32,4 +35,7 @@
   <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros"
       type="cartographer_occupancy_grid_node" args="-resolution 0.05" />
 
+      
+  <node name="rviz" pkg="rviz" type="rviz" required="true"
+      args="-d $(find hubo_slam)/configuration_files/hubo_3d.rviz" />
 </launch>

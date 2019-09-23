@@ -1,4 +1,4 @@
-# hubo_mapping
+# hubo_slam
 Configuration files for hubo + cartographer
 
 ## Usage:

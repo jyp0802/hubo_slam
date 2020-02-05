@@ -26,8 +26,8 @@
   <node name="cartographer_node" pkg="cartographer_ros"
       type="cartographer_node" args="
           -configuration_directory $(find hubo_slam)/configuration_files
-          -configuration_basename hubo_3d.lua"
-          -save_state_filename $(arg save_pbstream)
+          -configuration_basename hubo_3d.lua
+          -save_state_filename $(arg save_pbstream)"
       output="screen">
     <remap from="points2" to="/velodyne_points" />
   </node>

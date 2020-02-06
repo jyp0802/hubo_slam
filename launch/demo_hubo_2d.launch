@@ -15,7 +15,7 @@
 -->
 
 <launch>
-  <param name="/use_sim_time" value="true" />
+  <param name="/use_sim_time" value="false" />
   <arg name="save_bag" default="temp" />
   <arg name="save_pbstream" default="hubo_2d" />
 

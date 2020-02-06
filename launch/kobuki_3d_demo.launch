@@ -16,18 +16,26 @@
 
 <launch>
   <param name="/use_sim_time" value="false" />
-
-  <param name="robot_description" textfile="$(find hubo_slam)/urdf/kobuki_3d.urdf" />
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
-  <node pkg="tf" type="static_transform_publisher" name="world_to_map_tf_pub" args="0 0 0 0 0 0 1 world map 100" />
-  <node pkg="tf" type="static_transform_publisher" name="map_to_baselink_tf_pub" args="1 0 0 0 0 0 1 map base_link 100" />
-
+  <arg name="save_bag" default="temp" />
+  <arg name="save_pbstream" default="kobuki_3d" />
 
   <include file="$(find microstrain_3dm_gx5_45)/launch/microstrain_25.launch" />
   <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch" />
-  <!-- <include file="$(find hubo_slam)/launch/kobuki_3d.launch" /> -->
+  <include file="$(find hubo_slam)/launch/kobuki_3d.launch">
+    <arg name="save_pbstream" value ="$(find hubo_slam)/data/$(arg save_pbstream).pbstream" />
+  </include>
 
   <node name="rviz" pkg="rviz" type="rviz" required="true"
       args="-d $(find hubo_slam)/configuration_files/hubo_3d.rviz" />
+
+  <node name="record_rosbag" pkg="rosbag" type="record"
+       args="record -O $(find hubo_slam)/data/$(arg save_bag).bag -e '/velodyne_(.*)' '/imu(.*)' /diagnostics /scan"
+       if="$(eval save_bag != 'temp')" />
+
+  <!-- 
+  <param name="robot_description" textfile="$(find hubo_slam)/urdf/kobuki_3d.urdf" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <node pkg="tf" type="static_transform_publisher" name="world_to_map_tf_pub" args="0 0 0 0 0 0 1 world map 100" />
+  <node pkg="tf" type="static_transform_publisher" name="map_to_baselink_tf_pub" args="1 0 0 0 0 0 1 map base_link 100" /> -->
 
 </launch>
